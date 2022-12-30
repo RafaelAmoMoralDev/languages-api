@@ -1,0 +1,11 @@
+development:
+  default_domain: "https://api.languages.gavisa"
+  force_ssl: true
+
+  mysql:
+    username: root
+    password:
+    host: localhost
+    database: languages_api
+    encoding: utf8mb4
+    collation: utf8mb4_bin
