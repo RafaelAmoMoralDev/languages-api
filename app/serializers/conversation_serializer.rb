@@ -15,7 +15,7 @@ class ConversationSerializer < ActiveModel::Serializer
   end
 
   def user
-    UserSerializer.new(object.user1.id == @instance_options[:current_user].id ? object.user2 : object.user1, current_user: @instance_options[:current_user])
+    User::UserSerializer.new(object.user1.id == @instance_options[:current_user].id ? object.user2 : object.user1, current_user: @instance_options[:current_user])
   end
 
 end

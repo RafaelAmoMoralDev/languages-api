@@ -1,4 +1,4 @@
-class SecureUserSerializer < UserSerializer
+class User::AuthenticatedUserSerializer < User::UserSerializer
 
   attributes :auth_token
 

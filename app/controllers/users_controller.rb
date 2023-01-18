@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def sign_in
     if (user = User.find_by_email(params[:email])) && user.authenticate(params[:password])
-      render json: user, serializer: SecureUserSerializer, status: :ok
+      render json: user, serializer: User::AuthenticatedUserSerializer, status: :ok
     else
       error = if user == nil
                 { code: 1, message: "The user was not found", errors: [] }
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     user.update(password_digest: params[:password])
 
     if !user.new_record?
-      render json: user, serializer: SecureUserSerializer, status: :ok
+      render json: user, serializer: User::AuthenticatedUserSerializer, status: :ok
     else
       errors = []
       errors << user.errors.messages.map { |message| { type: message[0].to_s, causes: message[1] } }
@@ -33,10 +33,14 @@ class UsersController < ApplicationController
 
   def show
     if (user = User.find(params[:id]))
-      render json: user, serializer: UserSerializer, current_user: @current_user, status: :ok
+      render json: user, serializer: User::BasicUserSerializer, current_user: @current_user, status: :ok
     else
       render json: { code: 1, message: nil, errors: nil }, status: :not_found
     end
+  end
+
+  def me
+    render json: @current_user, serializer: User::UserSerializer, status: :ok
   end
 
   def like
