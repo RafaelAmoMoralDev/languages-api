@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   def sign_up
     user = User.create(email: params[:email], name: params[:name])
-    user.update(password_digest: params[:password])
+    user.update(password: params[:password])
 
     if !user.new_record?
       render json: user, serializer: User::AuthenticatedUserSerializer, status: :ok
