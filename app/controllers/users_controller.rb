@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    if (user = User.find(params[:id]))
+    if (user = User.find_by_id(params[:id]))
       render json: user, serializer: User::BasicUserSerializer, current_user: @current_user, status: :ok
     else
       render json: { code: 1, message: nil, errors: nil }, status: :not_found
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def like
-    if (user = User.find(params[:id]))
+    if (user = User.find_by_id(params[:id]))
       if user.users_likes.include?(@current_user)
         user.users_likes.delete(@current_user)
       else

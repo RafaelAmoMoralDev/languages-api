@@ -10,7 +10,7 @@ class User < ApplicationRecord
                           after_add: :update_likes_counter, after_remove: :update_likes_counter
 
   def self.authenticate(token)
-    User.where("REPLACE(REPLACE(SUBSTRING(pin_digest, 8, 32), '.', '0'), '/', 'I') = ?", token).limit(1).first
+    User.where("REPLACE(REPLACE(SUBSTRING(password_digest, 8, 32), '.', '0'), '/', 'I') = ?", token).limit(1).first
   end
 
   def token
